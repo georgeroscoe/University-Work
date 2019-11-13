@@ -277,9 +277,9 @@ def Team_Strategy(team, wallet=20000, alpha=20, beta=1.8):
     for i in range(1, data_length_big):
 
 
-        # if (team, data_ch[i][4]) in Strategy2():
+        # if (team, data_ch[i][4]) in strategy2():
         #     pass
-        # if (data_ch[i][3], team) in Strategy2():
+        # if (data_ch[i][3], team) in strategy2():
         #     pass
         sum_home_odds = float(0.0)
         sum_away_odds = float(0.0)
@@ -321,7 +321,7 @@ def Team_Strategy(team, wallet=20000, alpha=20, beta=1.8):
     print('Wallet value after applying strategy to ', team, "=", wallet)
     return wallet, matches_list
 
-def Strategy2(alpha, beta):
+def strategy2(alpha, beta):
 
     """
     Runs the betting strategy for every team in the league.
@@ -352,10 +352,14 @@ def Strategy2(alpha, beta):
 
 def alphaVary():
 
+    """
+    Varies the value of alpha whilst keeping beta constant.
+    """
+
     Wallet = []
     for i in range(5, 36):
         testalpha = i
-        Wallet.append(Strategy2(testalpha, 1.8))
+        Wallet.append(strategy2(testalpha, 1.8))
 
     plt.plot(Wallet)
     plt.ylabel('Final wallet value')
@@ -364,10 +368,14 @@ def alphaVary():
 
 def betaVary():
 
+    """
+    Varies the value of beta whilst keeping alpha constant.
+    """
+
     Wallet = []
     for i in range(0, 81):
         testbeta = 1 + (0.05)*i
-        Wallet.append(Strategy2(23, testbeta))
+        Wallet.append(strategy2(23, testbeta))
 
     plt.plot(Wallet)
     plt.ylabel('Final wallet value')
@@ -376,7 +384,12 @@ def betaVary():
 
 
 def bruteOptimise():
-    f = lambda param: 1 / Strategy2(param[0], param[1])
+
+    """
+    Optimises the betting strategy using brutce force.
+    """
+
+    f = lambda param: 1 / strategy2(param[0], param[1])
     param = brute(f, ((0, 100), (1, 10)))
     print(param)
 
@@ -386,7 +399,7 @@ if __name__ == "__main__":
     #GI_Team_Odds('Barnsley')
     #Market_Team_Odds('Fulham')
     #Team_Strategy('Willem', 20000, -100, 8)
-    Strategy2(21.05263158, 2.89473684)
+    strategy2(21.05263158, 2.89473684)
     #Compare_Odds('Fulham')
     #alphaVary()
     #betaVary()
